@@ -4,18 +4,22 @@ class FixedPopulation():
 
     def __init__(self):
         self._size = 0
-        self.compartments = list()
+        self._compartments = list()
 
     @property
     def size(self):
         return Constant(self._size)
+
+    @property
+    def compartment_sizes(self):
+        return [compartment.size.value for compartment in self._compartments]
 
     def create_compartment(self, label, initial=0):
         self._size += initial
         if initial < 0:
             raise ValueError('populations must be positive')
         compartment = self.Compartment(label, initial)
-        self.compartments.append(compartment)
+        self._compartments.append(compartment)
         return compartment
 
     def move(self, x, y, n):

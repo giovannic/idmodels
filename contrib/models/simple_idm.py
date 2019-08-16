@@ -10,13 +10,12 @@ susceptable = population.create_compartment('susceptable', initial=1000)
 infected = population.create_compartment('infected', initial=1)
 recovered = population.create_compartment('recovered')
 
-# set up model
-model = IDModel(population)
+# set up disease model
+model = IDModel(population, .1)
 beta = model.create_parameter('beta')
 sigma = model.create_parameter('sigma')
-dt = model.get_dt_parameter()
+dt = model.dt_parameter
 
-# set up transitions
 infection_expression = Binomial(
     susceptable.size_parameter(),
     beta * (infected.size / population.size) * dt
