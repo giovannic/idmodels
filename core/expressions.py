@@ -19,6 +19,8 @@ class Expression(ABC, DeferredArithmetic):
 class Constant(Expression):
 
     def __init__(self, value):
+        if value is None:
+            raise ValueError('Constants must be numeric')
         self._value = value
 
     @property
@@ -31,6 +33,8 @@ class Constant(Expression):
 class Variable(Expression):
 
     def __init__(self, value):
+        if value is None:
+            raise ValueError('Variables must be numeric')
         self.value = value
 
     def evaluate(self):

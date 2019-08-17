@@ -5,18 +5,25 @@ def cli_executor(model):
         description='Execute a stochastic infectious disease model'
     )
 
-    parameters = model.get_parameters()
+    parameters = model.parameters
+
+    parser.add_argument(
+        'steps',
+        help='number of timesteps to trace',
+        default=10,
+        type=int
+    )
 
     for parameter in parameters:
         parser.add_argument(
-            parameter.get_name(),
+            parameter.label,
             type=float
         )
 
-    args = parse_args()
+    args = parser.parse_args()
 
     for parameter in parameters:
-        parameter.set_value(getattr(args, parameter.get_name()))
+        parameter.set_value(getattr(args, parameter.label))
 
-    for row in model.trace():
-        print('\t'.join(str(item) for out in row))
+    for row in model.trace(args.steps):
+        print('\t'.join(str(item) for item in row))

@@ -11,9 +11,9 @@ class SimpleIDMTestCase(unittest.TestCase):
         sigma = 1
         out = subprocess.Popen([
             'python',
-            'contrib.models.simple_idm',
-            beta,
-            sigma
+            'contrib/models/simple_idm',
+            str(beta),
+            str(sigma)
         ])
         stdout, stderr  = out.communicate()
 
