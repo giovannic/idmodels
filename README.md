@@ -8,6 +8,11 @@ This codebase is for creating and simulating infectious disease models.
 
 TODO: make friendly
 
+### Environment
+
+* Python3 + virtualenv
+* Docker
+
 Contributed models are stored in contrib/models
 
 executing `python -m contrib.models.[your disease model] -h` will give you the
@@ -46,6 +51,13 @@ disease_model.add(dt * Constant(3))
 if __name__ == '__main__':
     cli_executor(disease_model)
 ```
+
+## Developing the framework
+
+TODO: make friendly
+
+* run tests
+* 
 
 ## Extensions
 
