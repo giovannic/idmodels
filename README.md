@@ -55,7 +55,7 @@ disease_model = TemporalDiseaseModel(population, .5)
 
 # create an expression for the transmission of disease
 dt = disease_model.dt_expression
-disease_model.add(dt * Constant(3))
+disease_model.add_transition(dt * Constant(3))
 
 # create a basic cli for your model
 if __name__ == '__main__':
