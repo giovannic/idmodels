@@ -1,22 +1,45 @@
-from core.expressions import Variable, Constant
+from core.expressions import Variable, Constant, Parameter
+import numpy as np
 
 class FixedPopulationModel():
 
     def __init__(self):
         self._size = 0
         self._compartments = list()
+        self._size_expression = Parameter('population_size')
+        self._simulation_size = 1
 
     @property
     def size(self):
-        return Constant(self._size)
+        return self._size_expression
 
     @property
     def compartment_sizes(self):
-        return [compartment.size.value for compartment in self._compartments]
+        return [
+            size
+            for compartment in self._compartments
+            for size in compartment.size.evaluate()
+        ]
 
     @property
     def compartment_labels(self):
-        return [compartment.label for compartment in self._compartments]
+        if self._simulation_size == 1:
+            return [
+                compartment.label for compartment in self._compartments
+            ]
+        else:
+            return [
+                '{}_{}'.format(compartment.label, i)
+                for compartment in self._compartments
+                for i in range(self._simulation_size)
+            ]
+
+    def initialise_expressions(self, n):
+        self._simulation_size = n
+        for compartment in self._compartments:
+            compartment.initialise(n)
+        self._size_expression.set_value(self._size)
+        self._size_expression.initialise(n)
 
     def create_compartment(self, label, initial=0):
         self._size += initial
@@ -27,12 +50,7 @@ class FixedPopulationModel():
         return compartment
 
     def move(self, x, y, n):
-        if n < 0:
-            return move(y, x, -n)
-        if x.size.value < n:
-            shift = x.size.value
-        else:
-            shift = n
+        shift = np.minimum(x.size.value, n)
         x.size.value -= shift
         y.size.value += shift
 
@@ -45,3 +63,6 @@ class FixedPopulationModel():
         @property
         def size(self):
             return self._size
+
+        def initialise(self, n):
+            self._size.initialise(n)

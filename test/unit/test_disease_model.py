@@ -13,9 +13,9 @@ class DiseaseModelTestCase(unittest.TestCase):
         alpha = model.create_parameter('alpha')
         model.add_transition(susceptable, infected, alpha)
         with self.assertRaises(ValueError):
-            model.step()
+            model.trace(1, 1)
         alpha.set_value(1)
-        model.step()
+        model.trace(1, 1)
 
     def test_will_update_population_on_timestep(self):
         population = FixedPopulationModel()
@@ -23,7 +23,7 @@ class DiseaseModelTestCase(unittest.TestCase):
         infected = population.create_compartment('infected', initial=1)
         model = TemporalDiseaseModel(population, 1)
         model.add_transition(susceptable, infected, Constant(1))
-        model.step()
+        model.trace(1, 1)
         self.assertEqual(susceptable.size.value, 999)
         self.assertEqual(infected.size.value, 2)
 
@@ -35,7 +35,7 @@ class DiseaseModelTestCase(unittest.TestCase):
         model = TemporalDiseaseModel(population, 1)
         model.add_transition(susceptable, infected, Constant(1))
         model.add_transition(infected, recovered, Constant(1))
-        model.step()
+        model.trace(1, 1)
         self.assertEqual(susceptable.size.value, 999)
         self.assertEqual(infected.size.value, 1)
         self.assertEqual(recovered.size.value, 1)
@@ -47,7 +47,7 @@ class DiseaseModelTestCase(unittest.TestCase):
         model = TemporalDiseaseModel(population, 4)
         dt = model.dt_expression
         model.add_transition(susceptable, infected, Constant(2) * dt)
-        model.step()
+        model.trace(1, 1)
         self.assertEqual(susceptable.size.value, 992)
         self.assertEqual(infected.size.value, 9)
 
@@ -59,7 +59,7 @@ class DiseaseModelTestCase(unittest.TestCase):
         dt = model.dt_expression
         model.add_transition(susceptable, infected, dt)
         self.assertEqual(
-            model.trace(3),
+            model.trace(3, 1),
             [
                 ['t', 'susceptable', 'infected'],
                 [0  , 1000         , 1         ],

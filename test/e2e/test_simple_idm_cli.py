@@ -10,11 +10,13 @@ class SimpleIDMTestCase(unittest.TestCase):
         beta = 10
         sigma = 1
         points = 1000
+        simulations = 1
         out = subprocess.run([
             'python',
             '-m',
             'contrib.models.simple_idm',
             str(points),
+            str(simulations),
             str(beta),
             str(sigma)
         ], stdout=subprocess.PIPE).stdout.decode('utf-8')
@@ -32,7 +34,7 @@ class SimpleIDMTestCase(unittest.TestCase):
 
         self.assertEqual(
             lines[1],
-            '\t'.join(['0', '1000', '1', '0'])
+            '\t'.join(['0.0', '1000', '1', '0'])
         )
 
         #check that the intermediate values are sensible

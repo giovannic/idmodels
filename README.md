@@ -70,3 +70,4 @@ TODO: make friendly
 
  * Wiki page
  * Build and host documentation
+ * Set coding conventions (e.g. variable naming to distinguish between model expressions and python variables)
