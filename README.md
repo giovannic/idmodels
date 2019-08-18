@@ -1,22 +1,32 @@
 # Infectious disease models
 
-TODO: make friendly
-
 This codebase is for creating and simulating infectious disease models.
 
 ## Running models from the command line
 
-TODO: make friendly
+Firstly, let's make sure you have an environment to execute the model
 
 ### Environment
 
-* Python3 + virtualenv
-* Docker
+Please make sure you have Python 3 installed. The dependencies are listed in
+requirements.txt. you can install them with:
+
+`pip install -r requirements.txt`
+
+### Running pre-made models
 
 Contributed models are stored in contrib/models
 
 executing `python -m contrib.models.[your disease model] -h` will give you the
 help text for your model.
+
+You can execute a model with the following code:
+
+```
+python -m contrib.models.simple_idm 100 1 10 1
+```
+
+To run a simple model and print out a trace
 
 ## Building your own models
 
@@ -54,10 +64,34 @@ if __name__ == '__main__':
 
 ## Developing the framework
 
-TODO: make friendly
+The framework is split into `core`, `test` `contrib`, `connectors` and `test`
 
-* run tests
-* 
+**core**
+
+These are the reusable parts of the framework for use by epidemiology
+researchers. It consists of high-level classes to abstract out the complexities
+of probabilistic programming. It has been split into:
+
+ * core.expressions: These are abstractions for the mathematical expressions
+that make up infectious disease models. It will handle the actual computation
+in model simulations
+ * core.models.population: These are classes to represent population models
+ * core.models.disease: These are classes to represent disease transmission
+models in a population
+
+**connectors**
+
+These are interfaces for the modelling code. Currently only the CLI connector
+is implemented.
+
+**test**
+
+You can run tests using `python -m unittest discover`. Please write e2e tests 
+before implementing new features and unittests while you're developing.
+
+**contrib**
+
+These are where contributed models are stored
 
 ## Extensions
 
