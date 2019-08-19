@@ -96,7 +96,7 @@ These are where contributed models are stored
 ## Extensions
 
  * Disease intervention models
- * Spatio-temporal models
+ * Different population models
  * Compute backend for expressions (tensorflow, pytorch, theano, edward...)
  * Graphical output
 
