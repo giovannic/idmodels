@@ -93,11 +93,17 @@ before implementing new features and unittests while you're developing.
 
 These are where contributed models are stored
 
+## Known issues
+
+ * dt cannot yet be parameterised (you probably don't want to hard code it)
+ * TemporalDiseaseModel uses python arithmetic instead of core.expression to calculate disease transitions
+ * In disease transitions, populations can change as they are being updated. They probably should be calculated based on frozen populations from the previous timestep
+
 ## Extensions
 
  * Disease intervention models
  * Different population models
- * Compute backend for expressions (tensorflow, pytorch, theano, edward...)
+ * Use a compute backend for expressions (tensorflow, pytorch, theano, edward...)
  * Graphical output
 
 ## Project growth
